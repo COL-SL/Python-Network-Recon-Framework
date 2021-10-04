@@ -11,7 +11,9 @@ def connection_scan(target_ip, target_port):
         conn_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn_socket.connect((target_ip, target_port))
         conn_socket.send(b'Banner_query\r\n')
+        results = conn_socket.recv(100)
         print("[+] {}/tcp open".format(target_port))
+        print("[+] {}".format(str(results)))  # Print banner grab results
     except OSError:
         print("[-] {}/tcp closed".format(target_port))
     finally:
