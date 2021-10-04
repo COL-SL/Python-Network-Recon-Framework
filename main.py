@@ -19,23 +19,6 @@ def connection_scan(target_ip, target_port):
 
 
 def port_scan(target, port_num):
-    """Scan indicated ports for status
-
-    First, it attempts to resolve the IP address of a provided hostname, then enumerates the ports"""
-    try:
-        target_ip = socket.gethostbyname(target)
-        # print('[*] Scan Results for:{}'.format(target_ip))
-        # connection_scan(target_ip, int(port_num))
-    except OSError:
-        print("[.] Cannot resolve {}: Unknown host".format(target))
-        return  # Exit scan if target IP is not resolved
-
-    try:
-        target_name = socket.gethostbyaddr(target_ip)
-        print('[*] Scan Results for:{}'.format(target_ip))
-        print('[*] Scan Results for: {}'.format(target_name[0]))
-    except OSError:
-        print('[*] Scan Results for: {}'.format(target_ip))
 
     t = threading.Thread(target=connection_scan, args=(target, int(port_num)))
     t.start()
@@ -53,10 +36,24 @@ def argument_parser():
     return var_args
 
 
+def study_target(host_target):
+    try:
+        target_ip = socket.gethostbyname(host_target)
+        target_name = socket.gethostbyaddr(target_ip)
+    except OSError:
+        print("[.] Cannot resolve {}: Unknown host".format(target_ip))
+        return  # Exit scan if target IP is not resolved
+
+    print('[*] Study Target IP: {}'.format(target_ip))
+    print('[*] Study Target Domain: {}\n'.format(target_name[0]))
+
+
 if __name__ == '__main__':
     try:
+
         user_args = argument_parser()
         host = user_args["host"]
+        study_target(host)
         port_list = user_args["ports"].split(",")  # Make a list from port numbers
         for port in port_list:
             port_scan(host, port)
