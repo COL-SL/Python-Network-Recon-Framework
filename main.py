@@ -28,4 +28,4 @@ if __name__ == '__main__':
         except AttributeError:
             print("Error. Please provide the command-line arguments before running.")
     except ValueError:
-        print("Please Enter a correct option")
+        print("Please Enter a correct option finis")

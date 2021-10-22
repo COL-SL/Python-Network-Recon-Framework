@@ -1,6 +1,7 @@
 import argparse
 import socket
 
+
 def initial_select():
     option_chose = input('Please enter:\n [1] To scan ports with Python\n [2] To scan ports with Nmap\n [3] '
                          'Web Page Scraping\n')
